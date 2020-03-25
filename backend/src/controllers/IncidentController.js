@@ -8,7 +8,7 @@ module.exports = {
     const [count] = await connection('incidents').count();
 
     const incidents = await connection('incidents')
-    .join('ongs', 'ong_id', '=', 'incidents.ong_id')
+    .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
     .limit(limit)
     .offset((page - 1) * limit)
     .select([
@@ -39,13 +39,15 @@ module.exports = {
 
   async delete(request, response){
     const {id} = request.params;
-    const id_ong = request.headers.authorization;
-    const incident = connection('incidents')
+    const ong_id = request.headers.authorization;
+    const incident = await connection('incidents')
     .where('id',id)
     .select('ong_id')
     .first();
 
     if(incident.ong_id !== ong_id){
+      console.log(incident.ong_id);
+      console.log(ong_id);
       return response.status(401).json({error : 'Operation not permitted.'});
     }
 
