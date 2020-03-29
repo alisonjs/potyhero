@@ -7,6 +7,9 @@
   "plugins": ["react", "jsx-a11y", "import"],
   "extends": "airbnb",
   "rules": {
+    "quotes": [2, "double", "avoid-escape"],
+    "comma-dangle": ["error", "never"],
+    "no-alert": "off",
     "react/jsx-filename-extension": [
       "error",
       {
